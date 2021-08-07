@@ -1,0 +1,420 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{fontspec}
+\setmainfont{Garamond}
+
+\usepackage[margin=2cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\theoremstyle{definition}
+\newtheorem{defi}{Definizione}
+\newtheorem{thm}{Teorema}
+\newtheorem{lem}{Lemma}
+\newtheorem{cor}{Corollario}
+
+\usepackage{xcolor}
+\definecolor{colorelink}{HTML}{ca2c92}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=colorelink
+}
+
+\title{Appunti Geometria}
+\author{Francesco}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Costruzioni di algebra multilineare}
+
+\subsection{Moduli liberi} \label{sec:modulo-libero}
+\begin{defi}
+\label{def:modulo-libero}
+Sia $R$ un anello commutativo unitario, $M$ un $R$-modulo e $X \subseteq M$ una sua parte.
+$M$ si dice \emph{libero} su $X$ se è privo di torsione ed è somma diretta degli $R$-moduli generati dagli elementi di $X$, ovvero:
+$$M = \oplus_{x \in X} \langle x \rangle_R$$
+Dove $\langle x \rangle_R = \{ r \cdot x : r \in R \}$ è l'$R$ sottomodulo di $M$ generato da $x$.
+\end{defi}
+
+Gli $R$-moduli liberi sono caratterizzati dalla seguente proprietà universale,
+
+\begin{lem}
+\label{thm:prop-universale-modulo-libero}
+Siano $M$ un $R$-modulo libero su $X$, $N$ un altro $R$-modulo e sia $f : X \to N$,
+esiste ed è \emph{unico} un omomorfismo $R$-lineare $\bar{f} : M \to N$ che estende $f$.
+\end{lem}
+
+\begin{proof}
+Iniziamo a dare una definizione per $\bar{f}$ e poi mostriamo che essa è l'unica funzione possibile con le proprietà richieste.
+
+Siccome $M$ è privo di torsione e si ha $M = \oplus_{x \in X} \langle x \rangle_R$, ogni elemento di $M$ si scrive in \emph{un unico modo} come combinazione lineare a coefficienti in $R$ di un numero finito di elementi di $X$.
+
+Allora la seguente definizione è ben posta: $\bar{f}(\sum\limits_{i = 0}^{n} r_i x_i) = \sum\limits_{i = 0}^{n} r_i f(x_i)$.
+
+Ovviamente quella che abbiamo definito è una funzione lineare che coincide con $f$ su $X$, quindi ora supponiamo che esista anche un'altra funzione $g : M \to N$ con le stesse proprietà,
+siccome $\bar{f}$ e $g$ coincidono su $X$, visto che entrambe estendono $f$ ed essendo entrambi omomorfismo $R$-lineari, si ha che, coincidendo su $X$, coincidono anche sull' $R$-sottospazio di $M$ generato da $X$, ovvero:
+$$\bar{f}(\langle X \rangle_R) = g(\langle X \rangle_R)$$
+Ma $\langle X \rangle = M$ per ipotesi, quindi $\bar{f} = g$.
+\end{proof}
+
+I moduli liberi sono la cosa più vicina agli spazi vettoriali, infatti come gli spazi vettoriali hanno una \emph{base}, che è una proprietà da cui discendono tutte le proprietà
+peculiari degli spazi vettoriali.
+
+\subsection{Prodotto tensoriale} \label{sec:prodotto-tensoriale}
+\begin{defi}
+\label{def: prodotto-tensoriale}
+Sia $R$ un anello commutativo unitario e $V$ e $W$ due \hyperref[sec:modulo-libero]{$R$-moduli}, allora consideriamo l'$R$-modulo libero su $V \times W$ che indichiamo con $L(V, W)$.
+
+Sia ora
+\begin{multline}
+R(V, W) = \langle (v_1 + v_2, w) - (v_1, w) - (v_2, w), \\
+(v, w_1 + w_2) - (v, w_1) - (v, w_2), \\
+(\alpha v, w) - \alpha (v, w), (v, \alpha, w) - \alpha (v, w) : v, v_1, v_2 \in V, w, w_1, w_2 \in V, \alpha \in R \rangle_R
+\end{multline}
+
+un sottomodulo di $L(V, W)$.
+
+Allora possiamo considerare l'$R$-modulo quoziente $L(V, W)/R(V, W)$ che chiamiamo \emph{prodotto tensoriale} di $V$ e $W$ e che indichiamo col simbolo $V \otimes W$.
+\end{defi}
+
+Come gli $R$-moduli liberi, anche i prodotti tensoriali possono essere caratterizzati da una proprietà universale, per definirla però, dobbiamo prima introdurre la funzione
+$\pi : V \times W \to V \otimes W$, proiezione dei generatori al quoziente, definita come segue:
+$$\pi(v, w) = [(v, w)]$$
+
+Le classi di equivalenza $[(v, w)]$ le indichiamo con il simbolo $v \otimes w$, quindi possiamo anche scrivere $\pi(v, w) = v \otimes w$. Inoltre, è facile vedere che $\pi$
+è una funzione $R$-bilineare.
+
+Dimostriamo ora che $\{ v \otimes w : v \in V, w \in W \}$ è un insieme di generatori per $V \otimes W$. Sia $p : L(V, W) \to V \otimes W$ il prolungamento $R$-lineare di $\pi$,
+allora è ovvio che $p$ è la proiezione al quoziente $L(V, W)/R(V, W)$ e quindi è suriettiva. Essendo un epimorfismo $R$-lineare, essa manda un insieme di generatori di $L(V, W)$
+in un insieme di generatori di $V \otimes W$, ma allora presa la base $V x W$ di $L(V, W)$, essa viene mandata da $p$ nell'insieme $\{ v \otimes w : v \in V, w \in W \}$
+che risulta, quindi, essere un insieme di generatori per il prodotto tensoriale di $V$ e $W$.
+
+\begin{lem}
+Siano $V$, $W$ e $N$ tre $R$-moduli, sia $f : V \times W \to N$ una funzione $R$-bilineare, allora esiste ed è \emph{unico} un omomorfismo $R$-lineare
+$\bar{f} : V \otimes W \to N$ tale che $\bar{f} \pi = f$.
+\end{lem}
+
+\begin{proof}
+Per la proprietà universale dei moduli liberi (Lemma \ref{thm:prop-universale-modulo-libero}), esiste un unico omomorfismo $R$-lineare $\widetilde{f} : L(V, W) \to N$.
+
+Ora dimostriamo che $R(V, W) \subseteq ker \widetilde{f}$: siano $v_1, v_2, v \in V$, $w_1, w_2, w \in W$ e $\alpha \in R$, siccome $f$ è $R$-bilineare, abbiamo che:
+
+$$f(v_1 + v_2, w) = f(v_1, w) + f(v_2, w)$$
+$$f(v, w_1 + w_2) = f(v, w_1) + f(v, w_2)$$
+$$f(\alpha v, w) = \alpha f(v, w)$$
+$$f(v, \alpha w) = \alpha f(v, w)$$
+
+Allora per come è stata definita $\widetilde{f}$ nel Lemma \ref{thm:prop-universale-modulo-libero} e per la sua linearità, si ha che:
+$$f((v_1 + v_2, w) - (v_1, w) - (v_2, w)) = f(v_1 + v_2, w) - f(v_1, w) - f(v_2, w) = 0$$
+
+Per le medesime ragioni anche gli altri generatori di $R(V, W)$ hanno immagine nulla, ne consegue che $R(V, W) \subseteq ker \widetilde{f}$.
+
+Ma allora possiamo definire l'omomorfismo $R$-lineare $\bar{f} : V \otimes W \to N$ come segue: $\bar{f}([x]) = [\widetilde{f}(x)]$ senza problemi di mal posizione.
+
+Osserviamo, infine che la funzione che abbiamo definito è l'unica che rispetta tutte le condizioni del teorema; sia infatti $g : V \otimes W \to N$ un altro omomorfismo $R$-lineare
+tale che $g \pi = f$, allora $g$ e $\bar{f}$ coincidono sui generatori di $V \otimes W$, ma allora, siccome sono entrambi omomorfismi $R$-lineari, devono coincidere su tutto $V \otimes W$.
+\end{proof}
+
+Se $k$ è un campo e $V$ e $W$ sono due $k$-spazi vettoriali di dimensione finita, possiamo dimostrare che anche $V \otimes W$ è un $k$-spazio vettoriale di dimensione finita, esibendone una base.
+
+Ora mostriamo una costruzione che ci servirà per trovare una base del prodotto tensoriale di $V$ e $W$, ma che è interessante di per sé.
+
+Dati due $k$-spazi vettoriali $V$ e $W$, possiamo considerare il $k$-spazio vettoriale $Hom_k(V, W)$ degli omomorfismi $k$-lineari tra $V$ e $W$, sappiamo che questo spazio
+è ancora di dimensione finita e ha dimensione $dim(V) \cdot dim(W)$. Sappiamo anche che ogni omomorfismo $k$-lineare si può mettere in corrispondenza, una volta fissate le basi di dominio
+e codominio, con una matrice $dim(V) \times dim(W)$. Ora faremo vedere come rappresentare un omomorfismo $k$-lineare nel prodotto tensoriale $V \otimes W$.
+
+Siano $\{e_i\}_{i = 1}^n$ una base di $V$ e $\{f_i\}_{i = 1}^m$ una base di $W$. Se $f \in Hom_k(V, W)$, sappiamo che essa è univocamente determinata dai suoi valori
+sulla base di $V$, quindi è univocamente determinata dai vettori (ordinati) $\{f(e_i)\}_{i = 1}^n$ di $W$, perché se $v \in V$, allora vale:
+$$f(v) = f(\sum\limits_{i = 1}^n \alpha_i e_i) = \sum\limits_{i = 1}^n \alpha_i f(e_i)$$.
+
+Allora possiamo descrivere $f$ in questo modo, dato $v \in W$, per calcolare $f(v)$ ci serve solo conoscere le componenti di $v$ nella base fissata e i vettori $\{f(e_i)\}_{i = 1}^n$.
+Le componenti di $v$ le possiamo ottenere usando la base $\{\phi_i\}_{i = 1}^n$ dello spazio duale $V^{*}$ e quindi possiamo rappresentare $f$ col seguente tensore:
+$$\phi_1 \otimes f(e_1) + \ldots + \phi_n \otimes f(e_n)$$
+dello spazio $V^{*} \otimes W$.
+
+Osserviamo che, viceversa, se considero il tensore $\phi \otimes w \in V^{*} \otimes W$, posso costruire una funzione lineare $f : V \to W$ come segue:
+$$f(v) = \phi(v) \cdot w$$
+è facile vedere che è effettivamente lineare, perché questo discende dalla linearità di $\phi$ e del prodotto esterno.
+
+Scriviamo esplicitamente l'isomorfismo che abbiamo realizzato cominciando con $F : V^{*} \otimes W \to Hom_k(V, W)$ che definiamo sfruttando la proprietà universale dei prodotti tensoriali:
+
+Se $\phi \in V^{*}$ e $w \in W$, allora poniamo $F(\phi \otimes w) = (\lambda v. \phi(v) \cdot w)$, abbiamo già dimostrato che il lato destro è effettivamente una funzione lineare, quindi $F$
+è ben posta.
+
+Descriviamo quindi $F^{-1} : Hom_k(V, W) \to V^{*} \otimes W$ come segue, se $f \in Hom_k(V, W)$, poniamo:
+$$F^{-1}(f) = \sum\limits_{i = 1}^n \phi_i \otimes f(e_i)$$
+
+Questa funzione è lineare, infatti:
+$$F^{-1}(\alpha f + \beta g) = \sum\limits_{i = 1}^n \phi_i \otimes (\alpha f(e_i) + \beta g(e_i)) = \alpha \sum\limits_{i = 1}^n \phi_i \otimes f(e_i) + \beta \sum\limits_{i = 1}^n \phi_i \otimes g(e_i) = \alpha\cdot F^{-1}(f) + \beta \cdot F^{-1}(g)$$
+
+Sia ora $f \in Hom_k(V, W)$, si ha che:
+$$F(F^{-1}(f))(v) = F(\sum\limits_{i = 1}^n \phi_i \otimes f(e_i))(v) = \sum\limits_{i = 1}^n \phi_i(v) \cdot f(e_i) = \sum\limits_{i = 1}^n v_i \cdot f(e_i) = f(v)$$
+Quindi $F(F^{-1}(f)) = f$; se invece $\phi \in V^{*}$ e $w \in W$:
+$$F^{-1}(F(\phi \otimes w)) = F^{-1}(\lambda v. \phi(v) \cdot w) = \sum\limits_{i = 1}^n \phi_i \otimes w$$
+
+Quindi effettivamente sono una l'inversa dell'altra e perciò abbiamo un isomorfismo tra $Hom_k(V, W)$ e $V^{*} \otimes W$. Questo isomorfismo, composto con l'isomorfismo tra le matrici $n \times m$
+e $Hom_k(V, W)$, ci permette di trovare una base di $V^{*} \otimes W$.
+
+sia $e_{i, j}$ la matrice tutta nulla tranne che per l'elemento di indice $(i, j)$ che è uguale a $1$. Questa matrice corrisponde alla funzione lineare
+$$f(v_1 e_1 + \ldots + v_n e_n) = v_i \cdot f_j$$
+
+Questa funzione lineare corrisponde al tensore $\phi_i \otimes f_j$. Allora la base $\{e_{i, j}\}$ viene mandata nella base $\{\phi_i \otimes f_j\}$ di $V^{*} \otimes W$.
+
+Ricordiamo che se $V$ è un $k$-spazio vettoriale di dimensione $n$, lo possiamo identificare col duale del duale $V^{**}$, allora usando la costruzione di prima, otteniamo che
+$V^{**} \otimes W$ è isomorfo a $Hom(V^{*}, W)$ e la sua base è data da $\{e_i \otimes f_j\}$, e quindi $V \otimes W$ ha dimensione $dim(V) \cdot dim(W)$.
+
+Siano ora $f : V \to V'$  e $g : W \to W'$ due funzioni lineari, definiamo $f \otimes g : V \otimes W \to V' \otimes W'$ come segue:
+$$(f \otimes g)(v \otimes w) = f(v) \otimes g(w)$$
+
+\subsection{Algebra tensoriale} \label{sec:algebra-tensoriale}
+Sia $V$ un $k$-spazio vettoriale, definiamo per induzione
+$$V^{\otimes 0} = k$$
+$$V^{\otimes 1} = V$$
+$$V^{\otimes n} = V \otimes V^{\otimes (n-1)} = V \otimes (V \otimes (\ldots(V \otimes V)\ldots)$$
+
+\begin{defi} \label{def:algebra-tensoriale}
+Sia $V$ un $k$-spazio vettoriale, definiamo la sua \emph{algebra tensoriale} come $T(V) = \oplus_{i = 0}^{\infty} V^{\otimes i}$
+\end{defi}
+
+Diamo a $T(V)$ la struttura di una $k$-algebra, definendo un prodotto su di essa. Iniziamo definendo un prodotto tra $V^{\otimes n}$ e $V^{\otimes m}$ a valori in $V^{\otimes (n+m)}$,
+cioè una funzione bilineare $f : V^{\otimes n} \times V^{\otimes m} \to V^{\otimes (n+m)}$.
+
+Per farlo, dimostriamo che il prodotto tensoriale è associativo, cioè, se $V, W, T$ sono tre $k$-spazi vettoriali, allora esiste un isomorfismo
+$f : V \otimes (W \otimes T) \to (V \otimes W) \otimes T$ definito come segue:
+
+Sia $v \in V$, iniziamo definendo $g_v : W \otimes T \to (V \otimes W) \otimes T$ al modo seguente: $g_v(w \otimes t) = (v \otimes w) \otimes t$, $g_v$ è bilineare, quindi ben posta.
+Definiamo, quindi, $f(v \otimes x) = g_v(x)$, $g_v$ è bilineare anche in $v$, infatti:
+$$g_{\alpha v_1 + \beta v_2}(x) = g_{\alpha v_1 + \beta v_2}(\sum\limits_{i = 1}^k w_i \otimes t_i) = \sum\limits_{i = 1}^k ((\alpha v_1 + \beta v_2) \otimes w_i)  \otimes t_i)=$$
+$$=\sum\limits_{i = 1}^k \alpha (v_1 \otimes w_i) \otimes t_i + \beta (v_2 \otimes w_i) \otimes t_i) = \alpha g_{v_1}(x) + \beta g_{v_2}(x)$$
+Quindi $f$ è ben definita.
+Seguendo lo stesso ragionamento si definisce $h : (V \otimes W) \otimes T \to V \otimes (W \otimes T)$ ponendo $h((v \otimes w) \otimes t) = v \otimes (w \otimes t)$ che è l'inversa.
+
+CONTINUARE
+
+\subsection{Algebra Esterna} \label{sec:algebra-esterna}
+
+\begin{defi} \label{def:algebra-esterna}
+Sia $V$ un $k$-spazio vettoriale, $T(V)$ la sua \hyperref[def:algebra-tensoriale]{algebra tensoriale}, consideriamo l'ideale (bilatero) di $T(V)$ definito come segue: $I(V) = ( v \otimes v : v \in V )$, allora
+la $k$-algebra quoziente $\Lambda(V) = T(V) / I(V)$ è detta \emph{algebra esterna} su $V$.
+
+Denotiamo la classe di equivalenza degli elementi del tipo $v_1 \otimes \ldots \otimes v_n$ come $v_1 \wedge \ldots \wedge v_n$.
+\end{defi}
+
+Osserviamo che, ovviamente, $v \wedge v = 0$, e da questo segue che:
+$$v \wedge w + w \wedge v = v \wedge w + v \wedge v + w \wedge w + w \wedge v = (v + w) \wedge w + (v + w) \wedge v = (v + w) \wedge (v + w) = 0$$
+Quindi $v \wedge w = - (v \wedge w)$.
+
+\section{Geometria Differenziale}
+Occorre prestare attenzione a varietà topologiche che si prestano ad avere una struttura più ricca che ci permette di trasportare strumenti di calcolo tipici degli spazi euclidei
+su questi spazi più generali.
+
+\begin{defi} \label{def:carta}
+Sia $M$ uno spazio topologico, e sia $U$ un suo aperto e sia $V$ un aperto di $\mathbb{R}^n$, allora $\phi : U \to V$ si dice $n$-\emph{carta} se $\phi$ è un omeomorfismo.
+Spesso indichiamo una carta $\phi : U \to V$ mettendo in evidenza il suo dominio e la funzione con il simbolo $(U, \phi)$, infatti il codominio si può sempre rappresentare come $\phi(U)$.
+\end{defi}
+
+\begin{defi} \label{def:carte-compatibili}
+Sia $M$ uno spazio topologico e $(U, \phi)$ e $(V, \psi)$ due sue \hyperref[def:carta]{$n$-carte}, esse si dicono \emph{compatibili} se la funzione
+$\phi \circ \psi^{-1} : \psi(U \cap V) \subseteq \mathbb{R}^n \to \phi(U \cap V) \subseteq \mathbb{R}^n$
+è un diffeomorfismo (differenziabile con inversa differenziabile).
+
+La funzione $\phi \circ \psi^{-1}$ si chiama \emph{cambio di carte}.
+\end{defi}
+
+\begin{defi} \label{def:atlante}
+Sia $M$ uno spazio topologico, una collezione $\mathcal{A} = \{(U_i, \phi_i)\}_{i \in I}$ di \hyperref[def:carta]{$n$-carte} è un \emph{atlante} se i domini di tutte le carte
+formano un ricoprimento di $M$ e in più le carte sono a due a due \hyperref[def:carte-compatibili]{compatibili}.
+\end{defi}
+
+\begin{defi} \label{def:struttura-differenziale}
+Sia $M$ uno spazio topologico, una $n$-\emph{struttura differenziale} su $M$ è un \hyperref[def:atlante]{$n$-atlante} massimale su $M$.
+\end{defi}
+
+Dato uno spazio topologico $M$ e un suo $n$-atlante $\mathcal{A}$, mostriamo come è possibile determinare una unica $n$-struttura differenziale su $M$ contenente le carte di $\mathcal{A}$.
+
+Definiamo $\mathcal{\bar{A}} = \{ (U, \psi) : (U, \psi)$ è compatibile con ogni carta di $\mathcal{A} \}$, ovviamente $\mathcal{A} \subseteq \mathcal{\bar{A}}$. Facciamo vedere che è anche un atlante.
+
+Siano $(U, \psi), (V, \phi) \in \mathcal{\bar{A}}$ allora per ogni $p \in U \cap V$, siccome $\mathcal{A}$ è un atlante, esiste $(W, \tau) \in \mathcal{A}$ tale che $p \in W$.
+Per ipotesi $(U, \psi)$ e $(V, \phi)$ sono entrambe compatibili con $(W, \tau)$, allora abbiamo che le seguenti funzioni sono diffeomorfismi:
+$$\tau \circ \psi^{-1} : \psi(U \cap W) \to \tau(U \cap W)$$
+$$\phi \circ \tau^{-1} : \tau(V \cap W) \to \phi(V \cap W)$$
+
+In particolare, restringedoci all'aperto $U \cap V \cap W$, possiamo comporre i due diffeomorfismi ottenendo $\phi \circ \psi^{-1}$ che è quindi un diffeomorfismo in $p \in U \cap V$.
+Per l'arbitrarietà di $p$, otteniamo, quindi che $\phi \circ \psi^{-1}$ è un diffeomorfismo in $U \cap V$. Quindi le due carte scelte sono compatibili.
+
+Infine osserviamo che non esiste nessun altro atlante contenente $\mathcal{\bar{A}}$, infatti se $\mathcal{B}$ fosse un tale atlante, presa una carta $(U, \psi) \in \mathcal{B}$, essa
+dovrebbe essere compatibile con tutte le carte di $\mathcal{A}$ dato che $\mathcal{A} \subseteq \mathcal{B}$, ma allora $(U, \psi) \in \mathcal{\bar{A}}$ e quindi $\mathcal{\bar{A}} = \mathcal{B}$.
+
+\begin{defi} \label{def:varietà-differenziale}
+Sia $M$ uno spazio topologico a \emph{base numerabile e di Hausdorff}, sia $\mathcal{A}$ una \hyperref[def:struttura-differenziale]{$n$-struttura-differenziale} su $M$, allora la coppia $(M, \mathcal{A})$
+si dice $n$-\emph{varietà differenziale}.
+\end{defi}
+
+È possibile costruire strutture differenziali anche spazi topologici che non sono di Hausdorff, un classico esempio è quello della retta con due origini, definita così:
+Consideriamo l'insieme $R = \mathbb{R} \sqcup \{0'\}$ con la topologia contenente come aperti tutti gli aperti di $\mathbb{R}$ e in più tutti gli insiemi $(A - \{0\}) \sqcup \{0'\}$
+con $A$ aperto di $\mathbb{R}$ contenente $0$. Questa è effettivamente una topologia ed è molto facile vedere perché.
+
+$R$ non è di Hausdorff, infatti $0$ e $0'$ non possono essere separati da due aperti disgiunti, però possiamo definire il seguente atlante:
+$$\mathcal{A} = \{ (\mathbb{R}, id_{\mathbb{R}}), ((\mathbb{R} - \{0\}) \sqcup \{0'\}, f) \}$$
+Dove $f(0') = 0$ e $f(x) = x\, ,\forall x \in \mathbb{R}-\{0\}$.
+
+$f$ è un omeomorfismo, infatti se $A$ è un aperto di $\mathbb{R}$, allora $f^{-1}(A) = A$ se $0 \notin A$, altrimenti $f^{-1}(A) = (A - \{0\}) \sqcup \{0'\}$, poi, se $A$ è un aperto del dominio
+della sua carta, è facile vedere che questo viene mandato in un aperto di $\mathbb{R}$.
+
+Ovviamente le funzioni sono compatibili tra di loro, quindi questo atlante determina una struttura differenziale su $R$, la retta con due origini, che però non è, per la nostra definizione,
+una varietà differenziale.
+
+\begin{defi} \label{def:funzione-differenziabile}
+Siano $M$ una $m$-varietà differenziale e $N$ una $n$-varietà differenziale, allora una funzione $F : M \to N$ è \emph{differenziabile} in $p \in M$ se esiste una carta $(U, \phi)$ di $M$
+tale che $p \in U$ e una carta $(V, \psi)$ di $N$ tale che $F(U) \subseteq V$, tali che $\psi \circ F \circ \phi^{-1} : \phi(U) \to \psi(F(U))$ risulti essere $C^{\infty}$ in $\phi(p)$.
+
+La funzione $\hat{F} = \psi \circ F \circ \phi^{-1}$ si chiama \emph{rappresentazione locale} di $F$ nelle carte $(U, \phi)$ e $(V, \psi)$.
+
+Una funzione $F : M \to N$ è differenziabile se è differenziabile in tutti i punti di $M$ ed è un \emph{diffeomorfismo} se è differenziabile e ha un'inversa anch'essa differenziabile.
+\end{defi}
+
+Osserviamo che la definizione di differenziabilità in un punto non dipende dalle carte che si scelgono, infatti essendo i cambi carta dei diffeomorfismi, si può passare da una carta
+ad un'altra senza problemi, dato che la rappresentazione locale resta differenziabile se lo era in precedenza.
+
+\begin{defi} \label{def:varietà-analitica}
+Se $M$ è uno spazio topologico e $\mathcal{A}$ una \hyperref[def:struttura-differenziale]{$2n$-struttura differenziale} su $M$ in cui i cambi carta non sono solo diffeomorfismi,
+ma sono isomorfismi bianalitici, allora diremo che $\mathcal{A}$ è una $n$-struttura complessa su $M$ e se poi $M$ è di Hausdorff e anche a base numerabile, allora
+$(M, \mathcal{A})$ è una $n$-varietà complessa.
+\end{defi}
+
+Analogamente si può dare una definizione di funzione analitica tra varietà analitiche.
+
+\begin{defi} \label{def:funzione-analitica}
+Siano $M$ una $m$-varietà analitica e $N$ una $n$-varietà analitica, allora una funzione $F : M \to N$ è \emph{analitica} in $p \in M$ se esiste una carta $(U, \phi)$ di $M$
+tale che $p \in U$ e una carta $(V, \psi)$ di $N$ tale che $F(U) \subseteq V$, tali che $\psi \circ F \circ \phi^{-1} : \phi(U) \subseteq \mathbb{C}^m \to \psi(F(U)) \subseteq \mathbb{C}^n$
+risulti essere \emph{analitica} in $\phi(p)$.
+
+Una funzione $F : M \to N$ è analitica se è analitica in tutti i punti di $M$ ed è un \emph{isomorfismo bianalitico} se è analitica e ha un'inversa anch'essa analitica.
+\end{defi}
+
+\subsection{Esempi di varietà differenziali ed analitiche}
+Mostriamo vari esempi di varietà differenziali ed analitiche.
+
+Prima di cominciare, nel seguito ci troveremo quasi esclusivamente a considerare sottoinsiemi di $\mathbb{R}^n$, facciamo vedere che questi insiemi, se muniti della topologia di sottospazio,
+sono ancora spazi di Hausdorff a base numerabile:
+
+Sia $X \subseteq \mathbb{R}^n$ e siano $p, q \in X$, allora esistono due aperti di $\mathbb{R}^n$ disgiunti, $U$ e $V$, tali che $p \in U$ e $q \in V$, ma allora $U \cap X$ e $V \cap X$
+sono aperti di $X$ e sono ancora disgiunti e si ha ancora che $p \in U \cap X$ e $q \in V \cap X$, quindi $X$ è uno spazio di Hausdorff.
+
+Sappiamo che $\mathbb{R}^n$ è uno spazio topologico a base numerabile, sia allora $\mathcal{B} = \{ B_i \}_{i \in \mathbb{N}}$ una sua base, si capisce subito che essendo il generico aperto di $X$
+un insieme del tipo $A \cap X$, con $A$ aperto di $\mathbb{R}^n$, allora $\mathcal{B} = \{ B_i \cap X \}_{i in \mathbb{N}}$  è una base della topologia indotta su $X$, che quindi è ancora
+a base numerabile.
+
+\subsubsection{Circonferenza}
+
+Procediamo dunque a considerare la circonferenza $S^1 = \{ z \in \mathbb{C} : |z|^2 = 1 \}$ ed esibiamo una struttura di varietà differenziale su di essa.
+
+Consideriamo le due carte $(U, \phi)$ e $(V, \psi)$ definite come segue,
+
+poniamo $U = S^1 - \{1\}$ e $V = S^1 - \{-1\}$ e poi definiamo $\phi : U \to ]0, 2\pi[$ e $\psi : V \to ]-\pi, \pi[$ così:
+
+$\phi(z) = \theta$, dove $\theta$ è la determinazione dell'argomento di $z$ in $[0, 2\pi]$.
+
+$\psi(z) = \theta$, dove $\theta$ è la determinazione dell'argomento di $z$ in $[-\pi, \pi]$.
+
+Sono entrambe funzioni invertibili, le inverse sono date da:
+
+$\phi^{-1}(\theta) = e^{i\theta}$ e $\psi^{-1}(\theta) = e^{i\theta}$. Osserviamo che la funzione $(z \in \mathbb{C} \mapsto e^{iz})$ è una funzione olomorfa, quindi è una funzione aperta, restringendo
+il suo dominio agli insiemi di definizione di $\phi^{-1}$ e $\psi^{-1}$, essa è iniettiva, quindi resta ancora una funzione aperta come si può facilmente verificare. Di conseguenza,
+$\phi^{-1}$ e $\psi^{-1}$ sono funzioni continue aperte e invertibili, ossia degli omeomorfismi.
+
+I domini delle due carte ricoprono tutta la circonferenza, quindi non ci resta che dimostrare che le due carte sono tra loro compatibili:
+Consideriamo, $\psi \circ \phi^{-1} : \phi(S^1 - \{1, -1\}) \to \psi(S^1 - \{1, -1\})$,
+
+osserviamo che $\phi(S^1 - \{1, -1\}) = ]0, \pi[ \cup ]\pi, 2\pi[$ e che $\psi(S^1 - \{1, -1\}) = ]-\pi, 0[ \cup ]0, \pi[$, quindi:
+
+$$
+(\psi \circ \phi^{-1})(\theta) = \begin{cases}
+    \theta &\text{se $\theta \in ]0, \pi[$}\\
+    \theta - 2\pi &\text{se $\theta \in ]\pi, 2\pi[$}
+\end{cases}
+$$
+
+e similmente,
+
+$$
+(\phi \circ \psi^{-1})(\theta) = \begin{cases}
+    \theta &\text{se $\theta \in ]0, \pi[$}\\
+    \theta + 2\pi &\text{se $\theta \in ]-\pi, 0[$}
+\end{cases}
+$$
+
+È chiaro che il cambio di carte è un diffeomorfismo, abbiamo perciò definito una struttura di $1$-varietà differenziale sulla circonferenza, che per quanto visto in precedenza
+è anche uno spazio topologico di Hausdorff a base numerabile, quindi è una varietà differenziale.
+
+\subsubsection{Sfera di Riemann}
+
+Costruiamo ora un primo esempio di varietà non solo differenziale, ma anche analitica. Sia $\hat{\mathbb{C}} = \mathbb{C} \cup \{\infty\}$ il piano complesso esteso.
+
+La topologia di questo spazio è ottenuta come compattificazione all'infinito dell'insieme dei numeri complessi. Definiamo le seguenti due carte:
+
+Sia $U = \mathbb{C}$ e $\phi(z) = z$, sia $V = \hat{\mathbb{C}} - \{0\}$ e $\psi(z) = \frac{1}{z}$, dove si intende che $\frac{1}{\infty} = 0$.
+
+È chiaro che entrambe le funzioni sono omeomorfismi, e che i cambiamenti di carta sono isomorfismi bianalitici, infatti,
+
+$\phi \circ \psi^{-1} (z) = \frac{1}{z}$ è bianalitica in $\mathbb{C} - \{0\}$.
+
+\subsubsection{Grafici di funzioni}
+Sia $U$ un aperto di $\mathbb{R}^n$ e sia $f : U \to \mathbb{R}$ una funzione continua. Consideriamo il suo grafico $G_f = \{ (x, f(x)) \in U \times \mathbb{R} \}$.
+Allora possiamo dotare $G_f$ di una struttura di varietà differenziabile. In questo caso ci basta una sola carta, definita come la proiezione sull'piano orizzontale:
+
+Sia $\pi : G_f \to \mathbb{R}^n$ definita come $\pi(x, y) = x$, allora è ovviamente una funzione continua, ma è anche invertibile, con inversa $\pi^{-1}(x) = (x, f(x))$,
+anch'essa continua per l'ipotesi che ci garantisce la continuità di $f$. Quindi abbiamo una carta, una carta globale, che quindi ci permette di definire un $n$-atlante.
+
+\subsubsection{Insiemi di livello}
+Siamo in grado di costruire una struttura differenziale anche su insiemi di livello di funzioni differenziabili. Questi insiemi, per il teorema della funzioni implicita, possono essere visti
+localmente come grafici di funzioni.
+
+Sia $F : \mathbb{R}^n \to \mathbb{R}$ una funzione $C^{\infty}$, e sia $X = \{ p \in \mathbb{R}^n : F(p) = 0 \}$, se per ogni $p \in X$, esiste $i \in \{1,\ldots,n\}$ tale che $\frac{dF}{dx_i}(p) \neq 0$,
+allora per il teorema della funzione implicita, $X$ è localmente il grafico di una funzione, ovvero:
+
+Per ogni $p \in X$, esiste un aperto $A \subseteq \mathbb{R}^n$ tale che $X \cap A$ è il grafico di una funzione,  quindi esiste un aperto $U \subseteq \mathbb{R}^{n-1}$ e una funzione
+$h : U \to \mathbb{R}$ liscia e un indice $i$ (corrispondente all'indice tale che $\frac{dF}{dx_i}(p) \neq 0$) tali che:
+
+$$X \cap A = \{ (x_1, \ldots, x_{i-1}, h(\underbar{x}), x_{i+1}, \ldots, x_n) : \underbar{x} \in U \}$$
+
+Allora la proiezione $\pi_i : X \cap A \to U$ è un omeomorfismo, visto che ha per inversa $\pi_i^{-1}(x_1, \ldots, \hat{x_i}, \ldots, x_n) = (x_1, \ldots, x_{i-1}, h(\underbar{x}), x_{i+1}, \ldots, x_n)$ anch'essa continua.
+
+Quindi $(X \cap A, \pi_i)$ è una carta e quindi abbiamo definito una collezione di carte i cui domini ricoprono $X$, mostriamo che le carte sono anche compatibili tra di loro:
+
+Siano $(X \cap A, \pi_i)$ e $(X \cap B, \pi_j)$ due carte tali che $X \cap A \cap B \neq \emptyset$, se $i = j$, allora il cambio carta è l'identità, quindi è liscia,
+se invece $i \neq j$, per esempio $i < j$, allora si ha:
+
+$$\pi_i \circ \pi_j^{-1} (x_1, \ldots, x_{n-1}) = (x_1, \ldots, x_{i-1}, x_{i+1}, \ldots, x_{j-1}, h(\underbar{x}), x_{j+1}, \ldots, x_n)$$
+
+Che è una funzione liscia. Quindi quello che abbiamo definito è un atlante e $X$ è una $(n-1)$-varietà differenziale.
+
+Analogamente se $F : \mathbb{R}^n \to \mathbb{R}^m$ è una funzione differenziabile, con $m \le n$ e $X = V(F) = \{ p \in \mathbb{R}^n : F(p) = 0 \}$ è tale che, per ogni $p \in X$,
+il rango di $F$ è massimo, allora sempre sfruttando il teorema della funzione implicita, si può vedere $X$ localmente come grafico di una funzione e come fatto prima, si può definire
+una struttura di $(n-m)$-varietà differenziale.
+
+Consideriamo un ultimo caso.
+
+Se $F : \mathbb{C}^2 \to \mathbb{C}$ è una funzione analitica, Possiamo scrivere $F$ nel seguente modo, $F(x, y, a, b) = u(x, y, a, b) + iv(x, y, a, b)$, e siccome $F$ è analitica,
+per le formula di Cauchy-Riemann, si ha che:
+$$\frac{\partial(u, v)}{\partial(x, y)} = \left|\frac{dF}{dz}\right|^2$$
+e
+$$\frac{\partial(u, v)}{\partial(a, b)} = \left|\frac{dF}{dw}\right|^2$$
+
+Ora, sia $X$ il suo insieme degli zeri, se per ogni $p \in X$ si ha $\frac{dF}{dz}(p) \neq 0$ oppure $\frac{dF}{dw}(p) \neq 0$, uno dei due determinanti sopra è non nullo,
+ma quindi la matrice Jacobiana di $F$ ha un minore di ordine 2 non nullo, quindi ha rango almeno 2, ma 2 è anche il rango massimo possibile, essendo lo Jacobiano una matrice $2 \times 4$.
+
+Quindi, possiamo applicare il teorema della funzione implicita per costruire una struttura differenziale su $X$. Ma dato che $F$ non è solo liscia, ma è anche analitica, è possibile
+che l'atlante definito non dia solo una struttura differenziale, ma anche una struttura analitica?
+
+\subsection{Sottovarietà}
+
+\end{document}
+
